@@ -265,7 +265,7 @@
             downloadUrl: 'https://github.com/tanshiyan/app-distribution/releases/download/V1.5/app-lvzhu-release.apk',
             
             // 是否使用 GitHub 加速镜像（可选）
-            useProxy: false,
+            useProxy: true,
             proxyUrl: 'https://ghproxy.com/',
             
             // 是否自动开始下载（扫码后自动触发）
@@ -331,16 +331,6 @@
             let downloadLink = CONFIG.downloadUrl;
             if (CONFIG.useProxy && CONFIG.proxyUrl) {
                 downloadLink = CONFIG.proxyUrl + downloadLink;
-            }
-            
-            // 验证下载链接
-            if (!downloadLink || downloadLink.includes('github.com/tanshiyan/app-distribution')) {
-                alert('⚠️ 请先配置正确的下载链接！\n\n在 index.html 中找到 CONFIG 对象，设置您的 APK 下载地址。');
-                loading.classList.remove('active');
-                btn.style.opacity = '1';
-                btn.style.pointerEvents = 'auto';
-                btn.innerHTML = '⬇️ 立即下载';
-                return;
             }
             
             // 开始下载
