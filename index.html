@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="应用下载页面">
-    <title>应用下载</title>
+    <title>投屏追剧应用下载</title>
     <style>
         * {
             margin: 0;
@@ -203,9 +203,9 @@
     <div class="wechat-tip" id="wechatTip">
         <div class="wechat-tip-content">
             <div class="wechat-tip-arrow">↗️</div>
-            <h2 style="font-size: 24px; margin-bottom: 10px;">检测到微信浏览器</h2>
-            <p style="font-size: 16px;">请点击右上角菜单</p>
-            <p style="font-size: 16px;">选择"在浏览器中打开"</p>
+            <h2 style="font-size: 24px; margin-bottom: 10px;">检测到您在微信中打开</h2>
+            <p style="font-size: 16px;">请点击右上角···菜单</p>
+            <p style="font-size: 16px;">选择【在浏览器中打开】</p>
             <p style="font-size: 14px; margin-top: 20px; opacity: 0.8;">以获得更好的下载体验</p>
         </div>
     </div>
@@ -255,21 +255,21 @@
         // ============================================
         const CONFIG = {
             // 应用信息
-            appName: '我的应用',
-            version: 'v1.0.0',
-            size: '25 MB',
-            minAndroid: 'Android 5.0+',
+            appName: '投屏搜剧软件',
+            version: 'v1.5.1',
+            size: '50 MB',
+            minAndroid: 'Android 6.0+',
             
             // APK 下载地址（必填）
             // 格式：https://github.com/username/repo/releases/download/v1.0.0/app.apk
-            downloadUrl: 'https://github.com/tanshiyan/app-distribution/releases/download/v1.0.0/app.apk',
+            downloadUrl: 'https://github.com/tanshiyan/app-distribution/releases/download/V1.5/app-lvzhu-release.apk',
             
             // 是否使用 GitHub 加速镜像（可选）
-            useProxy: false,
+            useProxy: true,
             proxyUrl: 'https://ghproxy.com/',
             
             // 是否自动开始下载（扫码后自动触发）
-            autoDownload: false
+            autoDownload: true
         };
         
         // ============================================
