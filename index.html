@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="应用下载页面">
+    <title>应用下载</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 48px 32px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .app-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        h1 {
+            font-size: 28px;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        
+        .version {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .info-item {
+            background: #f7fafc;
+            padding: 16px;
+            border-radius: 12px;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            color: #a0aec0;
+            margin-bottom: 4px;
+        }
+        
+        .info-value {
+            font-size: 16px;
+            color: #2d3748;
+            font-weight: 600;
+        }
+        
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        .tips {
+            margin-top: 24px;
+            padding: 16px;
+            background: #fff5f5;
+            border-radius: 12px;
+            border-left: 4px solid #fc8181;
+        }
+        
+        .tips-title {
+            font-size: 14px;
+            color: #c53030;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .tips-content {
+            font-size: 13px;
+            color: #742a2a;
+            line-height: 1.6;
+            text-align: left;
+        }
+        
+        .footer {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #a0aec0;
+        }
+        
+        .loading {
+            display: none;
+            margin-top: 16px;
+            color: #667eea;
+            font-size: 14px;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .wechat-tip {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 20px;
+        }
+        
+        .wechat-tip.show {
+            display: flex;
+        }
+        
+        .wechat-tip-content {
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .wechat-tip-arrow {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 36px 24px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wechat-tip" id="wechatTip">
+        <div class="wechat-tip-content">
+            <div class="wechat-tip-arrow">↗️</div>
+            <h2 style="font-size: 24px; margin-bottom: 10px;">检测到微信浏览器</h2>
+            <p style="font-size: 16px;">请点击右上角菜单</p>
+            <p style="font-size: 16px;">选择"在浏览器中打开"</p>
+            <p style="font-size: 14px; margin-top: 20px; opacity: 0.8;">以获得更好的下载体验</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="app-icon">📱</div>
+        
+        <h1>我的应用</h1>
+        <div class="version">版本 v1.0.0</div>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">文件大小</div>
+                <div class="info-value">25 MB</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">系统要求</div>
+                <div class="info-value">Android 5.0+</div>
+            </div>
+        </div>
+        
+        <a href="#" class="download-btn" id="downloadBtn" onclick="startDownload(event)">
+            ⬇️ 立即下载
+        </a>
+        
+        <div class="loading" id="loading">
+            正在准备下载...
+        </div>
+        
+        <div class="tips">
+            <div class="tips-title">📌 安装提示</div>
+            <div class="tips-content">
+                1. 下载完成后请在通知栏点击安装<br>
+                2. 如提示"未知来源"，请在设置中允许安装<br>
+                3. 部分手机可能需要关闭"安全扫描"
+            </div>
+        </div>
+        
+        <div class="footer">
+            © 2025 - 安全下载
+        </div>
+    </div>
+    
+    <script>
+        // ============================================
+        // 配置项 - 请在此处修改您的应用信息
+        // ============================================
+        const CONFIG = {
+            // 应用信息
+            appName: '我的应用',
+            version: 'v1.0.0',
+            size: '25 MB',
+            minAndroid: 'Android 5.0+',
+            
+            // APK 下载地址（必填）
+            // 格式：https://github.com/username/repo/releases/download/v1.0.0/app.apk
+            downloadUrl: 'https://github.com/tanshiyan/app-distribution/releases/download/v1.0.0/app.apk',
+            
+            // 是否使用 GitHub 加速镜像（可选）
+            useProxy: false,
+            proxyUrl: 'https://ghproxy.com/',
+            
+            // 是否自动开始下载（扫码后自动触发）
+            autoDownload: false
+        };
+        
+        // ============================================
+        // 初始化页面
+        // ============================================
+        function initPage() {
+            document.querySelector('h1').textContent = CONFIG.appName;
+            document.querySelector('.version').textContent = '版本 ' + CONFIG.version;
+            document.querySelectorAll('.info-value')[0].textContent = CONFIG.size;
+            document.querySelectorAll('.info-value')[1].textContent = CONFIG.minAndroid;
+        }
+        
+        // ============================================
+        // 检测浏览器环境
+        // ============================================
+        function detectBrowser() {
+            const ua = navigator.userAgent.toLowerCase();
+            
+            // 检测微信
+            if (ua.indexOf('micromessenger') > -1) {
+                document.getElementById('wechatTip').classList.add('show');
+                return false;
+            }
+            
+            // 检测 QQ 浏览器
+            if (ua.indexOf('qq') > -1 && ua.indexOf('mqqbrowser') > -1) {
+                // QQ 浏览器可以正常下载
+                return true;
+            }
+            
+            return true;
+        }
+        
+        // ============================================
+        // 开始下载
+        // ============================================
+        function startDownload(event) {
+            if (event) {
+                event.preventDefault();
+            }
+            
+            // 如果在微信中，不执行下载
+            const ua = navigator.userAgent.toLowerCase();
+            if (ua.indexOf('micromessenger') > -1) {
+                document.getElementById('wechatTip').classList.add('show');
+                return;
+            }
+            
+            const loading = document.getElementById('loading');
+            const btn = document.getElementById('downloadBtn');
+            
+            // 显示加载状态
+            loading.classList.add('active');
+            btn.style.opacity = '0.6';
+            btn.style.pointerEvents = 'none';
+            btn.innerHTML = '⏳ 准备下载...';
+            
+            // 构建下载链接
+            let downloadLink = CONFIG.downloadUrl;
+            if (CONFIG.useProxy && CONFIG.proxyUrl) {
+                downloadLink = CONFIG.proxyUrl + downloadLink;
+            }
+            
+            // 验证下载链接
+            if (!downloadLink || downloadLink.includes('github.com/tanshiyan/app-distribution')) {
+                alert('⚠️ 请先配置正确的下载链接！\n\n在 index.html 中找到 CONFIG 对象，设置您的 APK 下载地址。');
+                loading.classList.remove('active');
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+                btn.innerHTML = '⬇️ 立即下载';
+                return;
+            }
+            
+            // 开始下载
+            setTimeout(() => {
+                window.location.href = downloadLink;
+                btn.innerHTML = '✅ 下载已开始';
+                
+                // 恢复按钮状态
+                setTimeout(() => {
+                    loading.classList.remove('active');
+                    btn.style.opacity = '1';
+                    btn.style.pointerEvents = 'auto';
+                    btn.innerHTML = '⬇️ 立即下载';
+                }, 3000);
+            }, 800);
+        }
+        
+        // ============================================
+        // 页面加载完成
+        // ============================================
+        window.onload = function() {
+            initPage();
+            const canDownload = detectBrowser();
+            
+            // 如果设置了自动下载且不在微信中
+            if (CONFIG.autoDownload && canDownload) {
+                setTimeout(() => {
+                    startDownload();
+                }, 1000);
+            }
+        };
+        
+        // 点击微信提示遮罩关闭
+        document.getElementById('wechatTip').onclick = function() {
+            this.classList.remove('show');
+        };
+    </script>
+</body>
+</html>
