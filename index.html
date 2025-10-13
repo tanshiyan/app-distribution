@@ -2,38 +2,43 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="应用下载页面">
-    <title>投屏追剧应用下载</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="color-scheme" content="light only">
+    <meta name="supported-color-schemes" content="light only">
+    <title>投屏搜剧 - 免费追剧神器</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-        
-        .container {
-            background: white;
-            border-radius: 24px;
-            padding: 48px 32px;
-            max-width: 420px;
+
+        .content {
+            padding: 40px 20px 120px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* 主图展示区 */
+        .hero-image {
             width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            display: block;
+            border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            text-align: center;
-            animation: slideUp 0.6s ease-out;
+            animation: fadeInUp 0.8s ease-out;
         }
-        
-        @keyframes slideUp {
+
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -43,329 +48,458 @@
                 transform: translateY(0);
             }
         }
-        
+
+        /* 应用信息卡片 */
+        .app-info {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .app-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
         .app-icon {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 24px;
+            width: 80px;
+            height: 80px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 22px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            font-size: 40px;
+            margin-right: 20px;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
         }
-        
-        h1 {
-            font-size: 28px;
+
+        .app-details h1 {
+            font-size: 24px;
             color: #2d3748;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             font-weight: 700;
         }
-        
-        .version {
+
+        .app-version {
             color: #718096;
             font-size: 14px;
-            margin-bottom: 32px;
         }
-        
-        .info-grid {
+
+        .app-stats {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 32px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
         }
-        
-        .info-item {
+
+        .stat-item {
+            text-align: center;
+            padding: 15px 10px;
             background: #f7fafc;
-            padding: 16px;
             border-radius: 12px;
         }
-        
-        .info-label {
+
+        .stat-label {
             font-size: 12px;
             color: #a0aec0;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
-        
-        .info-value {
+
+        .stat-value {
             font-size: 16px;
             color: #2d3748;
             font-weight: 600;
         }
-        
+
+        /* 固定底部下载按钮 */
+        .fixed-download-btn-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.1) 0%, transparent 100%);
+            padding: 20px;
+            z-index: 100;
+        }
+
         .download-btn {
-            display: block;
-            width: 100%;
-            padding: 16px;
+            max-width: 600px;
+            margin: 0 auto;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            text-decoration: none;
-            border-radius: 12px;
+            padding: 18px 30px;
+            border-radius: 50px;
+            text-align: center;
             font-size: 18px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+            transition: all 0.3s ease;
+            user-select: none;
         }
-        
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-        }
-        
+
         .download-btn:active {
-            transform: translateY(0);
+            transform: scale(0.98);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
-        
-        .tips {
-            margin-top: 24px;
-            padding: 16px;
-            background: #fff5f5;
-            border-radius: 12px;
-            border-left: 4px solid #fc8181;
-        }
-        
-        .tips-title {
-            font-size: 14px;
-            color: #c53030;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .tips-content {
-            font-size: 13px;
-            color: #742a2a;
-            line-height: 1.6;
-            text-align: left;
-        }
-        
-        .footer {
-            margin-top: 24px;
-            font-size: 12px;
-            color: #a0aec0;
-        }
-        
-        .loading {
-            display: none;
-            margin-top: 16px;
-            color: #667eea;
-            font-size: 14px;
-        }
-        
-        .loading.active {
-            display: block;
-        }
-        
-        .wechat-tip {
+
+        /* 微信/浏览器引导遮罩 */
+        .browser-guide-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 9999;
-            align-items: flex-start;
-            justify-content: center;
-            padding-top: 20px;
+            animation: fadeIn 0.3s ease;
         }
-        
-        .wechat-tip.show {
+
+        .browser-guide-overlay.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .guide-content {
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .guide-step {
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-size: 18px;
+            text-align: left;
+        }
+
+        .dots {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .browser-text {
+            color: #667eea;
+            font-weight: 600;
+            padding: 2px 8px;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 4px;
+        }
+
+        .arrow-indicator {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 80px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* iOS 提示弹窗 */
+        .ios-alert {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ios-alert.show {
             display: flex;
         }
-        
-        .wechat-tip-content {
-            color: white;
+
+        .alert-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px;
+            max-width: 350px;
             text-align: center;
-            padding: 20px;
+            animation: scaleIn 0.3s ease;
         }
-        
-        .wechat-tip-arrow {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 36px 24px;
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
             }
-            
-            h1 {
-                font-size: 24px;
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .alert-content p {
+            font-size: 16px;
+            color: #2d3748;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .alert-content button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* 响应式 */
+        @media (max-width: 480px) {
+            .content {
+                padding: 20px 15px 120px 15px;
+            }
+
+            .app-info {
+                padding: 20px;
+            }
+
+            .app-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .app-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .download-btn {
+                font-size: 16px;
+                padding: 16px 25px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="wechat-tip" id="wechatTip">
-        <div class="wechat-tip-content">
-            <div class="wechat-tip-arrow">↗️</div>
-            <h2 style="font-size: 24px; margin-bottom: 10px;">检测到您在微信中打开</h2>
-            <p style="font-size: 16px;">请点击右上角···菜单</p>
-            <p style="font-size: 16px;">选择【在浏览器中打开】</p>
-            <p style="font-size: 14px; margin-top: 20px; opacity: 0.8;">以获得更好的下载体验</p>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="app-icon">📱</div>
+    <div class="content">
+        <!-- 主图展示 -->
+        <img src="https://via.placeholder.com/500x800/667eea/ffffff?text=投屏搜剧APP" alt="投屏搜剧" class="hero-image" id="heroImage">
         
-        <h1>我的应用</h1>
-        <div class="version">版本 v1.0.0</div>
-        
-        <div class="info-grid">
-            <div class="info-item">
-                <div class="info-label">文件大小</div>
-                <div class="info-value">25 MB</div>
+        <!-- 应用信息卡片 -->
+        <div class="app-info">
+            <div class="app-header">
+                <div class="app-icon">📱</div>
+                <div class="app-details">
+                    <h1>投屏搜剧</h1>
+                    <div class="app-version">版本 v1.5.1</div>
+                </div>
             </div>
-            <div class="info-item">
-                <div class="info-label">系统要求</div>
-                <div class="info-value">Android 5.0+</div>
+            
+            <div class="app-stats">
+                <div class="stat-item">
+                    <div class="stat-label">大小</div>
+                    <div class="stat-value">50 MB</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">系统</div>
+                    <div class="stat-value">Android 6.0+</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">更新</div>
+                    <div class="stat-value">2025-10</div>
+                </div>
             </div>
-        </div>
-        
-        <a href="#" class="download-btn" id="downloadBtn" onclick="startDownload(event)">
-            ⬇️ 立即下载
-        </a>
-        
-        <div class="loading" id="loading">
-            正在准备下载...
-        </div>
-        
-        <div class="tips">
-            <div class="tips-title">📌 安装提示</div>
-            <div class="tips-content">
-                1. 下载完成后请在通知栏点击安装<br>
-                2. 如提示"未知来源"，请在设置中允许安装<br>
-                3. 部分手机可能需要关闭"安全扫描"
-            </div>
-        </div>
-        
-        <div class="footer">
-            © 2025 - 安全下载
         </div>
     </div>
     
+    <!-- 固定悬浮的下载按钮 -->
+    <div class="fixed-download-btn-container">
+        <div class="download-btn" id="downloadBtn">
+            立即下载 Android 版
+        </div>
+    </div>
+    
+    <!-- iOS提示弹窗 -->
+    <div id="iosAlert" class="ios-alert">
+        <div class="alert-content">
+            <p>📱 iOS 版本暂未上架<br>敬请期待！</p>
+            <button id="closeIosAlert">确定</button>
+        </div>
+    </div>
+    
+    <!-- 浏览器打开引导遮罩层 -->
+    <div id="browserGuide" class="browser-guide-overlay">
+        <div class="arrow-indicator">↗️</div>
+        <div class="guide-content">
+            <div class="guide-step">
+                <div class="step-number">1</div>
+                <div class="step-text">点击右上角 <span class="dots">• • •</span></div>
+            </div>
+            
+            <div class="guide-step">
+                <div class="step-number">2</div>
+                <div class="step-text">选择在<span class="browser-text">浏览器</span>中打开</div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ============================================
-        // 配置项 - 请在此处修改您的应用信息
+        // 配置项
         // ============================================
         const CONFIG = {
-            // 应用信息
-            appName: '投屏搜剧软件',
+            appName: '投屏搜剧',
             version: 'v1.5.1',
             size: '50 MB',
             minAndroid: 'Android 6.0+',
+            updateDate: '2025-10',
             
-            // APK 下载地址（必填）
-            // 格式：https://github.com/username/repo/releases/download/v1.0.0/app.apk
+            // APK 下载地址
             downloadUrl: 'https://github.com/tanshiyan/app-distribution/releases/download/V1.5/app-lvzhu-release.apk',
             
-            // 是否使用 GitHub 加速镜像（可选）
+            // 启用加速镜像
             useProxy: true,
             proxyUrl: 'https://ghproxy.net/',
             
-            // 是否自动开始下载（扫码后自动触发）
-            autoDownload: true
+            // 主图地址（可以替换成您的实际图片）
+            heroImageUrl: 'https://via.placeholder.com/500x800/667eea/ffffff?text=投屏搜剧APP'
         };
-        
+
         // ============================================
-        // 初始化页面
+        // 初始化
         // ============================================
-        function initPage() {
-            document.querySelector('h1').textContent = CONFIG.appName;
-            document.querySelector('.version').textContent = '版本 ' + CONFIG.version;
-            document.querySelectorAll('.info-value')[0].textContent = CONFIG.size;
-            document.querySelectorAll('.info-value')[1].textContent = CONFIG.minAndroid;
+        function init() {
+            // 设置主图
+            document.getElementById('heroImage').src = CONFIG.heroImageUrl;
+            
+            // 设置应用信息
+            document.querySelector('.app-details h1').textContent = CONFIG.appName;
+            document.querySelector('.app-version').textContent = '版本 ' + CONFIG.version;
+            document.querySelectorAll('.stat-value')[0].textContent = CONFIG.size;
+            document.querySelectorAll('.stat-value')[1].textContent = CONFIG.minAndroid;
+            document.querySelectorAll('.stat-value')[2].textContent = CONFIG.updateDate;
         }
-        
+
         // ============================================
-        // 检测浏览器环境
+        // 检测设备和浏览器
         // ============================================
-        function detectBrowser() {
+        function detectEnvironment() {
             const ua = navigator.userAgent.toLowerCase();
             
-            // 检测微信
-            if (ua.indexOf('micromessenger') > -1) {
-                document.getElementById('wechatTip').classList.add('show');
-                return false;
-            }
-            
-            // 检测 QQ 浏览器
-            if (ua.indexOf('qq') > -1 && ua.indexOf('mqqbrowser') > -1) {
-                // QQ 浏览器可以正常下载
-                return true;
-            }
-            
-            return true;
+            return {
+                isIOS: /iphone|ipad|ipod/.test(ua),
+                isAndroid: /android/.test(ua),
+                isWeChat: /micromessenger/.test(ua),
+                isQQ: /qq/.test(ua) && /mqqbrowser/.test(ua)
+            };
         }
-        
+
         // ============================================
-        // 开始下载
+        // 下载处理
         // ============================================
-        function startDownload(event) {
-            if (event) {
-                event.preventDefault();
-            }
+        function handleDownload() {
+            const env = detectEnvironment();
             
-            // 如果在微信中，不执行下载
-            const ua = navigator.userAgent.toLowerCase();
-            if (ua.indexOf('micromessenger') > -1) {
-                document.getElementById('wechatTip').classList.add('show');
+            // iOS 设备
+            if (env.isIOS) {
+                document.getElementById('iosAlert').classList.add('show');
                 return;
             }
             
-            const loading = document.getElementById('loading');
-            const btn = document.getElementById('downloadBtn');
+            // 微信或QQ内置浏览器
+            if (env.isWeChat || env.isQQ) {
+                document.getElementById('browserGuide').classList.add('show');
+                return;
+            }
             
-            // 显示加载状态
-            loading.classList.add('active');
-            btn.style.opacity = '0.6';
-            btn.style.pointerEvents = 'none';
-            btn.innerHTML = '⏳ 准备下载...';
-            
-            // 构建下载链接
+            // 正常下载
+            startDownload();
+        }
+
+        // ============================================
+        // 开始下载
+        // ============================================
+        function startDownload() {
             let downloadLink = CONFIG.downloadUrl;
+            
+            // 如果启用代理
             if (CONFIG.useProxy && CONFIG.proxyUrl) {
                 downloadLink = CONFIG.proxyUrl + downloadLink;
             }
             
-            // 开始下载
+            // 触发下载
+            window.location.href = downloadLink;
+            
+            // 按钮反馈
+            const btn = document.getElementById('downloadBtn');
+            const originalText = btn.textContent;
+            btn.textContent = '✅ 下载已开始...';
+            btn.style.opacity = '0.7';
+            
             setTimeout(() => {
-                window.location.href = downloadLink;
-                btn.innerHTML = '✅ 下载已开始';
-                
-                // 恢复按钮状态
-                setTimeout(() => {
-                    loading.classList.remove('active');
-                    btn.style.opacity = '1';
-                    btn.style.pointerEvents = 'auto';
-                    btn.innerHTML = '⬇️ 立即下载';
-                }, 3000);
-            }, 800);
+                btn.textContent = originalText;
+                btn.style.opacity = '1';
+            }, 3000);
         }
-        
+
         // ============================================
-        // 页面加载完成
+        // 事件监听
+        // ============================================
+        document.getElementById('downloadBtn').addEventListener('click', handleDownload);
+        
+        document.getElementById('closeIosAlert').addEventListener('click', function() {
+            document.getElementById('iosAlert').classList.remove('show');
+        });
+        
+        document.getElementById('browserGuide').addEventListener('click', function() {
+            this.classList.remove('show');
+        });
+        
+        // iOS 提示点击遮罩关闭
+        document.getElementById('iosAlert').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('show');
+            }
+        });
+
+        // ============================================
+        // 页面加载
         // ============================================
         window.onload = function() {
-            initPage();
-            const canDownload = detectBrowser();
-            
-            // 如果设置了自动下载且不在微信中
-            if (CONFIG.autoDownload && canDownload) {
-                setTimeout(() => {
-                    startDownload();
-                }, 1000);
-            }
-        };
-        
-        // 点击微信提示遮罩关闭
-        document.getElementById('wechatTip').onclick = function() {
-            this.classList.remove('show');
+            init();
         };
     </script>
 </body>
