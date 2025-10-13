@@ -19,21 +19,23 @@
             min-height: 100vh;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
         .content {
-            padding: 40px 20px 120px 20px;
             max-width: 600px;
-            margin: 0 auto;
+            width: 100%;
+            padding-bottom: 100px;
         }
 
-        /* 主图展示区 */
-        .hero-image {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            display: block;
-            border-radius: 20px;
+        /* 应用信息卡片 */
+        .app-info {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             animation: fadeInUp 0.8s ease-out;
         }
@@ -49,71 +51,102 @@
             }
         }
 
-        /* 应用信息卡片 */
-        .app-info {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-
         .app-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
+            text-align: center;
+            margin-bottom: 30px;
         }
 
         .app-icon {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 18px;
+            border-radius: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
-            margin-right: 20px;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            font-size: 50px;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
 
         .app-details h1 {
-            font-size: 24px;
+            font-size: 28px;
             color: #2d3748;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: 700;
         }
 
         .app-version {
             color: #718096;
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .app-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
-            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         .stat-item {
             text-align: center;
-            padding: 15px 10px;
+            padding: 20px 10px;
             background: #f7fafc;
             border-radius: 12px;
+            transition: transform 0.2s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-2px);
         }
 
         .stat-label {
-            font-size: 12px;
+            font-size: 13px;
             color: #a0aec0;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .stat-value {
-            font-size: 16px;
+            font-size: 18px;
             color: #2d3748;
             font-weight: 600;
+        }
+
+        .app-description {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .app-description h3 {
+            font-size: 16px;
+            color: #2d3748;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .app-description ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .app-description li {
+            color: #4a5568;
+            font-size: 14px;
+            line-height: 1.8;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .app-description li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
         }
 
         /* 固定底部下载按钮 */
@@ -172,12 +205,12 @@
 
         .guide-content {
             color: white;
-            padding: 40px 30px;
+            padding: 60px 30px;
             text-align: center;
         }
 
         .guide-step {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -185,35 +218,35 @@
         }
 
         .step-number {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background: #667eea;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             flex-shrink: 0;
         }
 
         .step-text {
-            font-size: 18px;
+            font-size: 20px;
             text-align: left;
         }
 
         .dots {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
 
         .browser-text {
-            color: #667eea;
+            color: #ffd700;
             font-weight: 600;
-            padding: 2px 8px;
-            background: rgba(102, 126, 234, 0.2);
-            border-radius: 4px;
+            padding: 3px 10px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 6px;
         }
 
         .arrow-indicator {
@@ -249,7 +282,7 @@
 
         .alert-content {
             background: white;
-            padding: 30px;
+            padding: 35px;
             border-radius: 20px;
             margin: 20px;
             max-width: 350px;
@@ -269,9 +302,9 @@
         }
 
         .alert-content p {
-            font-size: 16px;
+            font-size: 17px;
             color: #2d3748;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             line-height: 1.6;
         }
 
@@ -279,46 +312,62 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 12px 40px;
+            padding: 13px 45px;
             border-radius: 25px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .alert-content button:active {
+            transform: scale(0.95);
         }
 
         /* 响应式 */
         @media (max-width: 480px) {
-            .content {
-                padding: 20px 15px 120px 15px;
+            body {
+                padding: 15px;
             }
 
             .app-info {
-                padding: 20px;
-            }
-
-            .app-header {
-                flex-direction: column;
-                text-align: center;
+                padding: 30px 20px;
             }
 
             .app-icon {
-                margin-right: 0;
-                margin-bottom: 15px;
+                width: 90px;
+                height: 90px;
+                font-size: 45px;
+            }
+
+            .app-details h1 {
+                font-size: 24px;
             }
 
             .download-btn {
                 font-size: 16px;
                 padding: 16px 25px;
             }
+
+            .guide-content {
+                padding: 40px 20px;
+            }
+
+            .step-text {
+                font-size: 18px;
+            }
+
+            .arrow-indicator {
+                font-size: 60px;
+                top: 20px;
+                right: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="content">
-        <!-- 主图展示 -->
-        <img src="https://via.placeholder.com/500x800/667eea/ffffff?text=投屏搜剧APP" alt="投屏搜剧" class="hero-image" id="heroImage">
-
-         <!-- 应用信息卡片 -->
+        <!-- 应用信息卡片 -->
         <div class="app-info">
             <div class="app-header">
                 <div class="app-icon">📱</div>
@@ -339,11 +388,20 @@
                 </div>
                 <div class="stat-item">
                     <div class="stat-label">更新</div>
-                    <div class="stat-value">2025-10</div>
+                    <div class="stat-value">2025-01</div>
                 </div>
             </div>
-        </div>
 
+            <div class="app-description">
+                <h3>✨ 应用特色</h3>
+                <ul>
+                    <li>海量影视资源，免费观看</li>
+                    <li>支持投屏，大屏观影更爽</li>
+                    <li>高清播放，流畅不卡顿</li>
+                    <li>智能搜索，快速找片</li>
+                </ul>
+            </div>
+        </div>
     </div>
     
     <!-- 固定悬浮的下载按钮 -->
@@ -386,26 +444,20 @@
             version: 'v1.5.1',
             size: '50 MB',
             minAndroid: 'Android 6.0+',
-            updateDate: '2025-10',
+            updateDate: '2025-01',
             
             // APK 下载地址
             downloadUrl: 'https://github.com/tanshiyan/app-distribution/releases/download/V1.5/app-lvzhu-release.apk',
             
             // 启用加速镜像
             useProxy: true,
-            proxyUrl: 'https://ghproxy.net/',
-            
-            // 主图地址（可以替换成您的实际图片）
-            heroImageUrl: 'images/toupin_share.webp'
+            proxyUrl: 'https://ghproxy.net/'
         };
 
         // ============================================
         // 初始化
         // ============================================
         function init() {
-            // 设置主图
-            document.getElementById('heroImage').src = CONFIG.heroImageUrl;
-            
             // 设置应用信息
             document.querySelector('.app-details h1').textContent = CONFIG.appName;
             document.querySelector('.app-version').textContent = '版本 ' + CONFIG.version;
