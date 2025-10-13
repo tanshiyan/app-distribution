@@ -7,6 +7,15 @@
     <meta name="supported-color-schemes" content="light only">
     <title>投屏搜剧 - 免费追剧神器</title>
     <style>
+        /* 强制白色背景，禁用深色模式 */
+        .app-info {
+            background: white !important;
+            color-scheme: light only;
+        }
+        
+        .app-info * {
+            color-scheme: light only;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -442,10 +451,10 @@
         // 配置项
         // ============================================
         const CONFIG = {
-            appName: '投屏搜剧',
+            appName: '小夸搜剧',
             version: 'v1.5.1',
-            size: '50 MB',
-            minAndroid: 'Android 6.0+',
+            size: '免费追剧',
+            minAndroid: 'Android手机',
             updateDate: '2025-01',
             
             // APK 下载地址
